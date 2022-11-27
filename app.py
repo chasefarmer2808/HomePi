@@ -1,8 +1,26 @@
-from flask import Flask
+import os
+from flask import Flask, send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='public/build')
+
+led = False
 
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+@app.route('/', defaults={'path': ''})
+@app.route("/<path:path>")
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.route('/led')
+def toggle_led():
+    global led
+    led = not led
+    return str(led)
+
+
+if __name__ == '__main__':
+    app.run(use_reloader=True, port=5000, threaded=True)
