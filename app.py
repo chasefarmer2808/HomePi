@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request, abort
 
 app = Flask(__name__, static_folder='public/build')
 
@@ -15,11 +15,25 @@ def serve(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 
-@app.route('/led')
-def toggle_led():
+@app.route('/led', methods=['GET', 'PUT'])
+def update_led():
     global led
-    led = not led
-    return str(led)
+
+    if request.method == 'GET':
+        # Toggle LED
+        led = not led
+        return str(led)
+
+    if request.method == 'PUT':
+        # Make sure LED is on.
+        if not led:
+            abort(403)
+
+        r = request.json['r']
+        g = request.json['g']
+        b = request.json['b']
+
+        return f'setting LED to r:{r} g:{g} b:{b}'
 
 
 if __name__ == '__main__':
