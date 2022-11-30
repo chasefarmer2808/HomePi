@@ -1,0 +1,1 @@
+curl -X PUT localhost:5000/led -H 'Content-Type: application/json' -d '{"status": false, "r": false, "b": true}'
