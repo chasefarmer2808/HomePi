@@ -30,6 +30,21 @@ const colorData: ColorMap = {
     g: false,
     b: true,
   },
+  yellow: {
+    r: true,
+    g: true,
+    b: false,
+  },
+  cyan: {
+    r: false,
+    g: true,
+    b: true,
+  },
+  magenta: {
+    r: true,
+    g: false,
+    b: true,
+  }
 };
 
 export const ColorPicker: React.FC<ColorPickerProps> = ({ onSelect }) => {

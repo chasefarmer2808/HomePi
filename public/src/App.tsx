@@ -41,8 +41,8 @@ function App() {
   return (
     <div className='App'>
       <div>
-        <h3>1. Input Raspberry Pi local IP Address</h3>
-        <input ref={ipInputRef} placeholder='127.0.0.1' />
+        <h3>1. Input Raspberry Pi local IP Address and Port Number</h3>
+        <input ref={ipInputRef} placeholder='127.0.0.1:5000' />
       </div>
       <div>
         <h3>2. Enable the LED if it is disabled</h3>

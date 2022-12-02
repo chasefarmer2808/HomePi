@@ -1,6 +1,7 @@
 import os
 import RPi.GPIO as GPIO
 from flask import Flask, send_from_directory, request, abort, jsonify
+from flask_cors import CORS
 
 redPin = 13
 greenPin = 19
@@ -13,6 +14,7 @@ GPIO.setup(greenPin, GPIO.OUT)
 GPIO.setup(bluePin, GPIO.OUT)
 
 app = Flask(__name__, static_folder='public/build')
+CORS(app)
 
 led = {
     'status': False,
@@ -66,11 +68,12 @@ def update_led():
 
 
 def enable_led():
+    print(led)
     GPIO.output(redPin, GPIO.HIGH) if led['r'] else GPIO.output(
         redPin, GPIO.LOW)
     GPIO.output(greenPin, GPIO.HIGH) if led['g'] else GPIO.output(
         greenPin, GPIO.LOW)
-    GPIO.output(bluePin, GPIO.HIGH) if led['r'] else GPIO.output(
+    GPIO.output(bluePin, GPIO.HIGH) if led['b'] else GPIO.output(
         bluePin, GPIO.LOW)
 
 
